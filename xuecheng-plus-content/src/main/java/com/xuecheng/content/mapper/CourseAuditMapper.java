@@ -1,9 +1,7 @@
 package com.xuecheng.content.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.xuecheng.content.entity.CourseAudit;
-import org.apache.ibatis.annotations.Mapper;
+import com.xuecheng.content.po.CourseAudit;
 
-@Mapper
 public interface CourseAuditMapper extends BaseMapper<CourseAudit> {
 }

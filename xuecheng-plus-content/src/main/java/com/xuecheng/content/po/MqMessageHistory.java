@@ -1,9 +1,9 @@
-package com.xuecheng.content.entity;
+package com.xuecheng.content.po;
 
 import lombok.Data;
 
 @Data
-public class MqMessage {
+public class MqMessageHistory {
 
   private long id;
   private String messageType;
@@ -11,7 +11,7 @@ public class MqMessage {
   private String businessKey2;
   private String businessKey3;
   private long executeNum;
-  private String state;
+  private long state;
   private java.sql.Timestamp returnfailureDate;
   private java.sql.Timestamp returnsuccessDate;
   private String returnfailureMsg;
@@ -20,6 +20,5 @@ public class MqMessage {
   private String stageState2;
   private String stageState3;
   private String stageState4;
-
 
 }
