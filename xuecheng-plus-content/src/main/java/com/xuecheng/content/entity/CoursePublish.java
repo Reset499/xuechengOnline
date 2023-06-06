@@ -1,9 +1,9 @@
-package com.xuecheng.entity;
+package com.xuecheng.content.entity;
 
 import lombok.Data;
 
 @Data
-public class CoursePublishPre {
+public class CoursePublish {
 
   private long id;
   private long companyId;
@@ -24,13 +24,16 @@ public class CoursePublishPre {
   private String teachplan;
   private String teachers;
   private java.sql.Timestamp createDate;
-  private java.sql.Timestamp auditDate;
+  private java.sql.Timestamp onlineDate;
+  private java.sql.Timestamp offlineDate;
   private String status;
   private String remark;
   private String charge;
   private double price;
   private double originalPrice;
   private long validDays;
+
+
 
 
 }

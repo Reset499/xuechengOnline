@@ -1,4 +1,4 @@
-package com.xuecheng.entity;
+package com.xuecheng.content.entity;
 
 import lombok.Data;
 
