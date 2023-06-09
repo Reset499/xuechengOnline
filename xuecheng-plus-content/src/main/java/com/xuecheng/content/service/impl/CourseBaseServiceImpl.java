@@ -10,6 +10,7 @@ import com.xuecheng.content.po.CourseBase;
 import com.xuecheng.content.mapper.CourseBaseMapper;
 import com.xuecheng.content.service.CourseBaseService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +23,11 @@ public class CourseBaseServiceImpl extends ServiceImpl<CourseBaseMapper, CourseB
     @Autowired CourseBaseMapper courseBaseMapper;
     @Override
     public PageResult<CourseBase> queryCourseBaseList(PageParams pageParams, QueryCourseParamDto queryCourseParamDto) {
-        //根据条件查询
+        //根据条件查询 加上isNotEmpty以后 若传的东西为null 则去除了这个条件
         LambdaQueryWrapper<CourseBase> lambdaQueryWrapper = new LambdaQueryWrapper<CourseBase>();
-        lambdaQueryWrapper.like(CourseBase::getName,queryCourseParamDto.getCourseName());
-        lambdaQueryWrapper.eq(CourseBase::getAuditStatus,queryCourseParamDto.getAuditStatus());
-        lambdaQueryWrapper.eq(CourseBase::getStatus,queryCourseParamDto.getPublishStatus());
+        lambdaQueryWrapper.like(StringUtils.isNotEmpty(queryCourseParamDto.getCourseName()),CourseBase::getName,queryCourseParamDto.getCourseName());
+        lambdaQueryWrapper.eq(StringUtils.isNotEmpty(queryCourseParamDto.getAuditStatus()),CourseBase::getAuditStatus,queryCourseParamDto.getAuditStatus());
+        lambdaQueryWrapper.eq(StringUtils.isNotEmpty(queryCourseParamDto.getPublishStatus()),CourseBase::getStatus,queryCourseParamDto.getPublishStatus());
 
         //分页
         Page<CourseBase> page = new Page<>(pageParams.getPageNo(),pageParams.getPageSize());

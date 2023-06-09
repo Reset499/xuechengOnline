@@ -8,9 +8,9 @@ POST http://localhost:63040/content/course/list?pageNo=2&pageSize=10
 Content-Type: application/json
 
 {
-  "auditStatus": "202004",
-  "courseName": "java",
-  "publishStatus": "203001"
+  "auditStatus": "",
+  "courseName": "",
+  "publishStatus": ""
 }
 
 <> 2023-06-07T164104.200.json
