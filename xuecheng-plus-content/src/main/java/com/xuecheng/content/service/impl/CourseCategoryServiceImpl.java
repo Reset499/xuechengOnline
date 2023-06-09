@@ -30,10 +30,11 @@ public class CourseCategoryServiceImpl extends ServiceImpl<CourseCategoryMapper,
         List<CourseCategoryTreeDto> courseCategoryList = new ArrayList<>();
         //从头遍历 List<CourseCategoryTreeDto> ，一边遍历一边找子节点放在父节点的childrenTreeNodes
         courseCategoryTreeDtos.stream().filter(item -> !id.equals(item.getId())).forEach(item -> {
+            //放入第一级的 父节点为1
             if (item.getParentid().equals(id)) {
                 courseCategoryList.add(item);
             }
-            //找到节点的父节点
+            //找到节点的父节点 拿到父亲节点并放入该节点(子)
             CourseCategoryTreeDto courseCategoryParent = mapTemp.get(item.getParentid());
             if(courseCategoryParent!=null){
                 if(courseCategoryParent.getChildrenTreeNodes()==null){
@@ -43,9 +44,6 @@ public class CourseCategoryServiceImpl extends ServiceImpl<CourseCategoryMapper,
                 //到每个节点的子节点放在父节点的childrenTreeNodes属性中
                 courseCategoryParent.getChildrenTreeNodes().add(item);
             }
-
-
-
         });
 
         return courseCategoryList;
