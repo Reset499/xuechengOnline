@@ -26,11 +26,11 @@ public class CourseBaseInfoController {
     }
 
     @ApiOperation("新增课程")
-    @PostMapping("/content/course")
+    @PostMapping("/course")
     //由页面输入的信息 添加到数据库中 返回一个添加成功的信息
 
     public CourseBaseInfoDto createCourseBase(@RequestBody AddCourseDto addCourseDto){
-        Long companyId = 0L;
+        Long companyId = 1232141425L;
         return courseBaseService.createCourseBase(companyId,addCourseDto);
     }
 }
