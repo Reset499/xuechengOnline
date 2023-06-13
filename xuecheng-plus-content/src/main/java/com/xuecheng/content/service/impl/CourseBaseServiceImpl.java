@@ -7,6 +7,7 @@ import com.xuecheng.PageParams;
 import com.xuecheng.PageResult;
 import com.xuecheng.content.dto.AddCourseDto;
 import com.xuecheng.content.dto.CourseBaseInfoDto;
+import com.xuecheng.content.dto.EditCourseDto;
 import com.xuecheng.content.dto.QueryCourseParamDto;
 import com.xuecheng.content.mapper.CourseCategoryMapper;
 import com.xuecheng.content.mapper.CourseMarketMapper;
@@ -15,6 +16,7 @@ import com.xuecheng.content.mapper.CourseBaseMapper;
 import com.xuecheng.content.po.CourseCategory;
 import com.xuecheng.content.po.CourseMarket;
 import com.xuecheng.content.service.CourseBaseService;
+import com.xuecheng.exception.XueChengPlusException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -37,6 +39,8 @@ public class CourseBaseServiceImpl extends ServiceImpl<CourseBaseMapper, CourseB
 
     @Autowired
     CourseCategoryMapper courseCategoryMapper;
+
+    //1.分页查询
     @Override
     public PageResult<CourseBase> queryCourseBaseList(PageParams pageParams, QueryCourseParamDto queryCourseParamDto) {
         //根据条件查询 加上isNotEmpty以后 若传的东西为null 则去除了这个条件
@@ -58,6 +62,8 @@ public class CourseBaseServiceImpl extends ServiceImpl<CourseBaseMapper, CourseB
         return courseBasePageResult;
     }
 
+
+    //2.新增课程
     @Override
     public CourseBaseInfoDto createCourseBase(Long companyId, AddCourseDto addCourseDto) {
         //参数校验是否合法
@@ -86,7 +92,7 @@ public class CourseBaseServiceImpl extends ServiceImpl<CourseBaseMapper, CourseB
         return getCourseBaseInfo(courseId);
     }
 
-    //单独写一个方法,若已经有这个营销信息 存在则更新 不存在则添加
+    //2.1单独写一个方法,若已经有这个营销信息 存在则更新 不存在则添加
     private int saveCourseMarket(CourseMarket courseMarket) {
         //参数的合法性校验
         String charge = courseMarket.getCharge();
@@ -108,8 +114,9 @@ public class CourseBaseServiceImpl extends ServiceImpl<CourseBaseMapper, CourseB
         }
     }
 
-    //查询课程信息
-    private CourseBaseInfoDto getCourseBaseInfo(Long courseId) {
+    //2.2查询课程信息
+    @Override
+    public CourseBaseInfoDto getCourseBaseInfo(Long courseId) {
         //查询课程基本信息
         CourseBase courseBase = courseBaseMapper.selectById(courseId);
         if (courseBase == null) return null;
@@ -125,5 +132,33 @@ public class CourseBaseServiceImpl extends ServiceImpl<CourseBaseMapper, CourseB
         CourseCategory courseCategorySt = courseCategoryMapper.selectById(courseBase.getSt());
         courseBaseInfoDto.setStName(courseCategorySt.getName());
         return courseBaseInfoDto;
+    }
+
+    //3.修改课程
+    @Override
+    public CourseBaseInfoDto updateCourseBase(Long companyId, EditCourseDto editCourseDto) {
+        //3.1更新课程基础信息
+        CourseBase courseBase = courseBaseMapper.selectById(editCourseDto.getId());
+        if(courseBase==null){
+            XueChengPlusException.cast("课程不存在");
+        }
+        if(!companyId.equals(courseBase.getCompanyId())){
+            XueChengPlusException.cast("无权修改该课程");
+        }
+        BeanUtils.copyProperties(editCourseDto,courseBase);
+        courseBase.setChangeDate(Timestamp.valueOf(LocalDateTime.now()));
+        int i = courseBaseMapper.updateById(courseBase);
+        if(i<=0){
+            XueChengPlusException.cast("修改课程失败");
+        }
+        //3.2更新课程营销信息
+        CourseMarket courseMarket = courseMarketMapper.selectById(editCourseDto.getId());
+        BeanUtils.copyProperties(editCourseDto,courseMarket);
+        int j = courseMarketMapper.updateById(courseMarket);
+        if(j<=0){
+            XueChengPlusException.cast("修改课程信息失败");
+        }
+        //查询课程信息 并返回
+        return this.getCourseBaseInfo(editCourseDto.getId());
     }
 }

@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @date 2023/2/12 16:55
  */
 
-//只有一个属性 返回的json类型
+//只有一个属性 用于让这个类去返回的json类型
 public class RestErrorResponse implements Serializable {
 
  private String errMessage;

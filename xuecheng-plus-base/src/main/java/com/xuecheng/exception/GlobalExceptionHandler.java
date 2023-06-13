@@ -44,6 +44,4 @@ public class GlobalExceptionHandler {
     RestErrorResponse restErrorResponse = new RestErrorResponse(CommonError.UNKOWN_ERROR.getErrMessage());
     return restErrorResponse;
    }
-
-
 }
