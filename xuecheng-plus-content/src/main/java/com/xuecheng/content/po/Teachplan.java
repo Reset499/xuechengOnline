@@ -5,19 +5,19 @@ import lombok.Data;
 @Data
 public class Teachplan {
 
-  private long id;
+  private Long id;
   private String pname;
-  private long parentid;
-  private long grade;
+  private Long parentid;
+  private Long grade;
   private String mediaType;
   private java.sql.Timestamp startTime;
   private java.sql.Timestamp endTime;
   private String description;
   private String timelength;
-  private long orderby;
-  private long courseId;
-  private long coursePubId;
-  private long status;
+  private Integer orderby;
+  private Long courseId;
+  private Long coursePubId;
+  private Integer status;
   private String isPreview;
   private java.sql.Timestamp createDate;
   private java.sql.Timestamp changeDate;

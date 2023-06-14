@@ -29,7 +29,7 @@ public class SaveTeachplanDto {
     /**
      * 层级，分为1、2、3级
      */
-    private Integer grade;
+    private Long grade;
 
     /**
      * 课程类型:1视频、2文档
@@ -52,4 +52,5 @@ public class SaveTeachplanDto {
      * 是否支持试学或预览（试看）
      */
     private String isPreview;
+
 }
