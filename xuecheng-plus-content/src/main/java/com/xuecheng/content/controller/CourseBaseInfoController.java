@@ -45,7 +45,7 @@ public class CourseBaseInfoController {
     @PutMapping("/course")
     public CourseBaseInfoDto updateCourseBase(@RequestBody EditCourseDto editCourseDto){
         //获取当前机构id
-        Long compantId = 1232141425L;
-        return courseBaseService.updateCourseBase(compantId,editCourseDto);
+        Long companyId = 1232141425L;
+        return courseBaseService.updateCourseBase(companyId,editCourseDto);
     }
 }
