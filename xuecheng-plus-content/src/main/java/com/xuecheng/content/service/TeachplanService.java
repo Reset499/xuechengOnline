@@ -11,4 +11,6 @@ public interface TeachplanService extends IService<Teachplan> {
     public List<TeachplanDto> findTeachplanTree(Long courseId);
 
     public void saveTeachplan(SaveTeachplanDto saveTeachplanDto);
+
+    public void deleteTeachplan(Long id);
 }
